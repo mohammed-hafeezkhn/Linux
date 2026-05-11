@@ -74,5 +74,5 @@ Note:check, MBR (Dos partition),GPT partition(Uparted),powerfailure fs,ext4 vs f
 (CMD) cat /proc/meminfo
 (CMD) memstat
 
------file ops
+-----file ops-----
 
