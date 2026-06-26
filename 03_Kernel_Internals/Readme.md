@@ -1,4 +1,4 @@
-# OS Internals
+# Linux Internals
 
 ## 1. Overview & Architecture
 
