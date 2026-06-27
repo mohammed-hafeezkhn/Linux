@@ -191,5 +191,4 @@
 ---
 <p align="right">
   ➡️ <a href="Readme_aarch.md" style="color: #2e6c80;">Next: Armv8-A Fundamentals</a></br>
-  ➡️ <a href="EmbeddedOS.md" style="color: #2e6c80;">OS internals</a>
 </p>

@@ -10,8 +10,28 @@ The kernel is the fundamental program of an operating system, loaded into RAM at
 * **System Calls:** When a user application needs a hardware resource (like reading a file), it issues a system call. This triggers a temporary, secure switch to Kernel Mode so the OS can fulfill the request.
 * **Kernel Architecture:**
   * **Microkernels** run only core functions in Kernel Mode and delegate the rest to external processes (highly modular but slower).
+  - Micro Kernel OS:
+     - The OS consists of the microkernel (or just “kernel”) and a set of
+cooperating processes. 
+     - The processes are separate from the kernel so if something goes
+wrong in a process it would not affect the kernel.
+     - Drivers are just processes, so that the kernel is even protected from driver problems
+and drivers are protected from each other. Drivers can be started, stopped, and
+debugged like any other process.
   * **Monolithic kernels** (traditional Unix) pack all subsystems into one large program running in Kernel Mode (very fast but rigid).
+  - Monolithic kernel OS:
+    - The kernel contains the OS kernel functionality and all drivers,
+so driver development is complex and debugging can be painful.
+    -  Applications are processes in protected memory space, so the
+kernel is protected from applications and applications are protected
+from each other.
+
   * **The Linux Hybrid:** Linux is monolithic for performance but uses Loadable Modules. Modules (like device drivers) can be dynamically linked or unlinked at runtime, providing microkernel-like flexibility and memory efficiency without sacrificing speed.
+
+  
+  
+
+
 
 ### 2. Process and User Management
 Operating systems are designed to be multiuser and multiprocessing, allowing multiple users and applications to run concurrently and securely.
