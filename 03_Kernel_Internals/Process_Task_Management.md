@@ -80,7 +80,6 @@ doing. It must know, for instance, the process's priority, whether it is running
 CPU or blocked on an event, what address space has been assigned to it, which
 files it is allowed to address, and so on
 
-
 - This is the role of the process descriptor —
 a task_struct type structure whose fields contain all the information related to a
 single process
@@ -97,7 +96,26 @@ is rather complex. In addition to a large number of fields containing process
 attributes, the process descriptor contains several pointers to other data structures
 that, in turn, contain pointers to other structure
 
-- The kernel stores the list of processes in a circular doubly linked list called the task list.Each element in the task list is a process descriptor of the type struct task_struct
+- The kernel stores the list of processes in a circular doubly linked list called the task list.Each element in the task list is a process descriptor of the type struct task_struct.
+
+- struct structure is allocated via the slab allocator to provide object reuse and
+cache coloring
+
+- For each process, Linux packs two
+different data structures in a single per-process memory area: a small data structure
+linked to the process descriptor, namely the thread_info structure, and the
+Kernel Mode process stack. The length of this memory area is usually 8,192 bytes
+(two page frames).
+
+-  that a process in
+Kernel Mode accesses a stack contained in the kernel data segment, which is
+different from the stack used by the process in User Mode. Because kernel control
+paths make little use of the stack, only a few thousand bytes of kernel stack are
+required. Therefore, 8 KB is ample space for the stack and the thread_info
+structure. However, when stack and thread_info structure are contained in a single page frame, the kernel uses a few additional stacks to avoid the overflows
+caused by deeply nested interrupts and exceptions.
+
+
 
 # Threads
 - Threads of execution, often shortened to threads, are the objects of activity within the
