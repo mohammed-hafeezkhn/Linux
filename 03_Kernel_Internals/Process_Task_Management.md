@@ -1,9 +1,10 @@
 * [Process](#process)
+* [Threads](#threads)
 * [Scheduling](#scheduling)
 
 ---
 
-## Process 
+# Process 
 - A process is a program (object code stored on some media) in the midst of execution.
 - Processes are, however, more than just the executing program code (often called the text
 section in Unix).They also include a set of resources such as open files and pending signals,
@@ -40,7 +41,7 @@ code and data
 from other processes
 </details>
 
-### Process Types
+## Process Types
 - The process that calls fork() is the parent, whereas the new process is the child.The
 parent resumes execution and the child starts execution at the same place: where the call
 to fork() returns.The fork() system call returns from the kernel twice: once in the parent process and again in the newborn child.
@@ -73,9 +74,32 @@ memory (each with its own copy of the data), and so on.3
 In other words, a new program is loaded. Because exec does not create a new process, an old
 program must first be duplicated using fork, and then exec must be called to generate an additional application on the system.
 
+### Process Descriptor
+- To manage processes, the kernel must have a clear picture of what each process is
+doing. It must know, for instance, the process's priority, whether it is running on a
+CPU or blocked on an event, what address space has been assigned to it, which
+files it is allowed to address, and so on
 
 
-### Threads
+- This is the role of the process descriptor —
+a task_struct type structure whose fields contain all the information related to a
+single process
+
+- The process descriptor contains the data that describes the executing program—open files, the process’s address space,
+pending signals, the process’s state, and much more
+
+- The task_struct is a relatively large data structure, at around 1.7 kilobytes on a 32-bit
+machine.This size, however, is quite small considering that the structure contains all the
+information that the kernel has and needs about a process
+
+- As the repository of so much information, the process descriptor
+is rather complex. In addition to a large number of fields containing process
+attributes, the process descriptor contains several pointers to other data structures
+that, in turn, contain pointers to other structure
+
+- The kernel stores the list of processes in a circular doubly linked list called the task list.Each element in the task list is a process descriptor of the type struct task_struct
+
+# Threads
 - Threads of execution, often shortened to threads, are the objects of activity within the
 process. 
 - Each thread includes a unique program counter, process stack, and set of processor registers.
@@ -124,7 +148,7 @@ control
 resources **Threads run code, processes own resources**
 </details>
 
-## Scheduling
+# Scheduling
 Processes provide two virtualizations: a virtualized
 processor and virtual memory
 - The virtual processor gives the process the illusion that it
